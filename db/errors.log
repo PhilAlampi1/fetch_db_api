@@ -3392,3 +3392,24 @@
 
 08:42:07 error: operator does not exist: text = bigint
          query: update "Import_Field_Mapping" as "t" set "importedFieldName"="v"."importedFieldName" from (values('238','Addendums')) as "v"("importFieldMappingId","importedFieldName") WHERE "v"."importFieldMappingId" = "t"."importFieldMappingId"
+
+16:27:23 error: column "true" does not exist
+         query: SELECT "formId", "formName", "formDescription", "public" FROM "Form" WHERE "userId" = '21' OR "public" = "true"
+
+20:49:13 error: invalid input syntax for uuid: "undefined"
+         query: SELECT "userId" FROM "Users" WHERE "userToken" = 'undefined' 
+
+20:51:00 error: invalid input syntax for uuid: "CookiesForm"
+         query: SELECT "userId" FROM "Users" WHERE "userToken" = 'CookiesForm' 
+
+20:52:25 error: invalid input syntax for uuid: "undefined"
+         query: SELECT "userId" FROM "Users" WHERE "userToken" = 'undefined' 
+
+20:52:43 error: invalid input syntax for uuid: "CookiesForm"
+         query: SELECT "userId" FROM "Users" WHERE "userToken" = 'CookiesForm' 
+
+20:53:38 error: invalid input syntax for uuid: "CookiesForm"
+         query: SELECT "userId" FROM "Users" WHERE "userToken" = 'CookiesForm' 
+
+20:57:33 error: invalid input syntax for uuid: "CookiesForm"
+         query: SELECT "userId" FROM "Users" WHERE "userToken" = 'CookiesForm' 

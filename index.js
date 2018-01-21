@@ -36,8 +36,20 @@ POST('/importfilemappings/add',
 POST('/importfieldmappings/update',
   req => db.imports.updateImportFieldMappings(req.body))
 
-  GET('/updateimportfilesetupname/:id/:usertoken/:name',
+GET('/updateimportfilesetupname/:id/:usertoken/:name',
   req => db.imports.updateImportFileSetupName(req.params.id, req.params.usertoken, req.params.name))
+
+GET('/createform/:name/:description/:usertoken',
+  req => db.imports.createForm(req.params.name, req.params.description, req.params.usertoken))
+
+GET('/finduserforms/:usertoken',
+  req => db.imports.findUserForms(req.params.usertoken))
+
+GET('/updateForm/:id/:name/:description/:usertoken',
+  req => db.imports.updateForm(req.params.id, req.params.name, req.params.description, req.params.usertoken))
+
+
+
 
 
 // GET('/users/find/:email/:password',

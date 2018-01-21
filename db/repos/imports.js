@@ -66,14 +66,14 @@ class ImportsRespository {
                 if (result.userId) {
                     return this.db.any(
                         'SELECT "Standard_Field"."standardFieldId", "Standard_Field"."standardFieldName", ' +
-                            '"Standard_Field"."standardFieldDescription",  "Standard_Field"."importRowIdentifier", ' +
-                            '"Import_Field_Mapping"."importedFieldName", "Import_Field_Mapping"."importFieldMappingId" ' +
+                        '"Standard_Field"."standardFieldDescription",  "Standard_Field"."importRowIdentifier", ' +
+                        '"Import_Field_Mapping"."importedFieldName", "Import_Field_Mapping"."importFieldMappingId" ' +
                         'FROM "Standard_Field" ' +
                         'LEFT JOIN (' +
-                            'SELECT "Import_Field_Mapping"."importedFieldName", "Import_Field_Mapping"."standardFieldId", ' +
-                                    '"Import_Field_Mapping"."importFieldMappingId" ' +
-                            'FROM "Import_Field_Mapping"' +
-                            'WHERE "Import_Field_Mapping"."importFileSetupId" = $1) AS "Import_Field_Mapping" ' +
+                        'SELECT "Import_Field_Mapping"."importedFieldName", "Import_Field_Mapping"."standardFieldId", ' +
+                        '"Import_Field_Mapping"."importFieldMappingId" ' +
+                        'FROM "Import_Field_Mapping"' +
+                        'WHERE "Import_Field_Mapping"."importFileSetupId" = $1) AS "Import_Field_Mapping" ' +
                         'ON "Standard_Field"."standardFieldId" = "Import_Field_Mapping"."standardFieldId" ' +
                         'ORDER BY "Standard_Field"."standardFieldId"',
                         [importFileSetupId]
@@ -118,7 +118,7 @@ class ImportsRespository {
             )
     }
 
-    updateImportFileSetupName (id, userToken, name) {
+    updateImportFileSetupName(id, userToken, name) {
         return this.db.oneOrNone(
             'SELECT "userId" ' +
             'FROM "Users" ' +
@@ -128,7 +128,7 @@ class ImportsRespository {
                     return this.db.any(
                         'UPDATE "Import_File_Setup" ' +
                         'SET "importFileSetupName" = $1' +
-                        'WHERE "userId" = $2 ' + 
+                        'WHERE "userId" = $2 ' +
                         'AND "importFileSetupId" = $3',
                         [name, result.userId, id]
                     )
@@ -138,10 +138,64 @@ class ImportsRespository {
             )
     }
 
-    // UPDATE table_name
-    // SET column1 = value1, column2 = value2, ...
-    // WHERE condition;
+    createForm(formName, formDescription, userToken) {
+        return this.db.oneOrNone(
+            'SELECT "userId" ' +
+            'FROM "Users" ' +
+            'WHERE "userToken" = $1 ',
+            [userToken]).then((result) => {
+                if (result.userId) {
+                    return this.db.one(
+                        'INSERT INTO "Form" ' +
+                        '("formName", "formDescription", "userId") ' +
+                        'VALUES ($1, $2, $3) ' +
+                        'RETURNING "formId"',
+                        [formName, formDescription, result.userId]
+                    )
+                }
+            },
+            reason => reason
+            )
+    }
 
+    findUserForms(userToken) {
+        return this.db.oneOrNone(
+            'SELECT "userId" ' +
+            'FROM "Users" ' +
+            'WHERE "userToken" = $1 ',
+            [userToken]).then((result) => {
+                if (result.userId) {
+                    return this.db.any(
+                        'SELECT "formId", "formName", "formDescription", "public" ' +
+                        'FROM "Form" ' +
+                        'WHERE "userId" = $1 OR "public" = true',
+                        [result.userId]
+                    )
+                }
+            },
+            reason => reason
+            )
+    }
+
+    updateForm(formId, formName, formDescription, userToken) {
+        return this.db.oneOrNone(
+            'SELECT "userId" ' +
+            'FROM "Users" ' +
+            'WHERE "userToken" = $1 ',
+            [userToken]).then((result) => {
+                if (result.userId) {
+                    return this.db.any(
+                        'UPDATE "Form" ' +
+                        'SET "formName" = $1, "formDescription" = $2 ' +
+                        'WHERE "userId" = $3 ' +
+                        'AND "formId" = $4',
+                        [formName, formDescription, result.userId, formId]
+                    )
+                }
+            },
+            reason => reason
+            )
+    }
 }
 
 module.exports = ImportsRespository

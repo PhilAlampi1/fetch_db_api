@@ -11,7 +11,7 @@ class UsersRepository {
       'UPDATE "Users" ' +
       'SET "lastLogin" = $1 ' +
       'WHERE "userGoogleId" = $2 ' +
-      'RETURNING "userId", "userToken"',
+      'RETURNING "userId", "userToken", "userRole"',
       [moment(), userGoogleId])
       .then(result => {
         if (result) {
@@ -21,7 +21,7 @@ class UsersRepository {
             'INSERT INTO "Users" ' +
             '("userGoogleId", "userFirstName", "userEmail", "userGoogleToken", "firstLogin", "lastLogin") ' +
             'VALUES($1, $2, $3, $4, $5, $5) ' +
-            'RETURNING "userId", "userToken"',
+            'RETURNING "userId", "userToken", "userRole"',
             [userGoogleId, userFirstName, userEmail, userGoogleToken, moment()])
         }
       }).catch((e) => e)

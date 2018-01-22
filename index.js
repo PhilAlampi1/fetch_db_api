@@ -45,8 +45,13 @@ GET('/createform/:name/:description/:usertoken',
 GET('/finduserforms/:usertoken',
   req => db.imports.findUserForms(req.params.usertoken))
 
-GET('/updateForm/:id/:name/:description/:usertoken',
-  req => db.imports.updateForm(req.params.id, req.params.name, req.params.description, req.params.usertoken))
+GET('/updateForm/:id/:name/:description/:public/:usertoken',
+  req => db.imports.updateForm(
+    req.params.id,
+    req.params.name,
+    req.params.description,
+    req.params.public === 'T' ? 'true' : 'false',
+    req.params.usertoken))
 
 
 

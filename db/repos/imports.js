@@ -177,7 +177,7 @@ class ImportsRespository {
             )
     }
 
-    updateForm(formId, formName, formDescription, userToken) {
+    updateForm(formId, formName, formDescription, publicForm, userToken) {
         return this.db.oneOrNone(
             'SELECT "userId" ' +
             'FROM "Users" ' +
@@ -186,10 +186,10 @@ class ImportsRespository {
                 if (result.userId) {
                     return this.db.any(
                         'UPDATE "Form" ' +
-                        'SET "formName" = $1, "formDescription" = $2 ' +
+                        'SET "formName" = $1, "formDescription" = $2, "public" = $5' +
                         'WHERE "userId" = $3 ' +
                         'AND "formId" = $4',
-                        [formName, formDescription, result.userId, formId]
+                        [formName, formDescription, result.userId, formId, publicForm]
                     )
                 }
             },

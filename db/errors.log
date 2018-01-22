@@ -3413,3 +3413,12 @@
 
 20:57:33 error: invalid input syntax for uuid: "CookiesForm"
          query: SELECT "userId" FROM "Users" WHERE "userToken" = 'CookiesForm' 
+
+10:37:56 error: syntax error at or near ""userId""
+         query: UPDATE "Form" SET "formName" = 'Clear Capital v129', "formDescription" = 'Clear Cap', "public" = falseWHERE "userId" = '21' AND "formId" = '6'
+
+10:38:55 error: syntax error at or near ""userId""
+         query: UPDATE "Form" SET "formName" = 'Clear Capital v129', "formDescription" = 'Clear Cap', "public" = trueWHERE "userId" = '21' AND "formId" = '6'
+
+10:42:15 error: syntax error at or near ""userId""
+         query: UPDATE "Form" SET "formName" = 'Clear Capital v129', "formDescription" = 'Clear Cap', "public" = trueWHERE "userId" = '21' AND "formId" = '6'

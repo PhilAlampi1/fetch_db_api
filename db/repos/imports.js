@@ -1,3 +1,9 @@
+// import { updateUserFormFieldMapping, createUserFormFieldMapping } from './utilities'
+
+const updateUserFormFieldMapping = require('./utilities').updateUserFormFieldMapping
+const createUserFormFieldMapping = require('./utilities').createUserFormFieldMapping
+
+
 class ImportsRespository {
     constructor(db, pgp) {
         this.db = db
@@ -191,6 +197,68 @@ class ImportsRespository {
                         'AND "formId" = $4',
                         [formName, formDescription, result.userId, formId, publicForm]
                     )
+                }
+            },
+            reason => reason
+            )
+    }
+
+    createUpdateUserFormFieldMapping(irId, formId, standardFieldId, formFieldSelector, publicMapping, defaultValue, override, userToken) {
+        return this.db.oneOrNone(
+            'SELECT "userId", "userRole" ' +
+            'FROM "Users" ' +
+            'WHERE "userToken" = $1 ',
+            [userToken])
+            .then((result) => {
+                if (result.userId) { // user exists
+                    if (!!publicMapping && result.userRole !== 'ADMIN') {
+                        throw ('Only ADMIN users may update public mappings.')
+                    }
+                    if (!publicMapping || publicMapping == 'false') { // this is a user (private) mapping
+                        return this.db.any( // check if private record already exists
+                            'SELECT "userFormFieldMappingId" ' +
+                            'FROM "User_Form_Field_Mapping" ' +
+                            'WHERE "publicMapping" = false ' +
+                            'AND "formFieldSelector" = $1 ' +
+                            'AND "formId" = $2 ' +
+                            'AND "createdByUserId" = $3',
+                            [formFieldSelector, formId, result.userId])
+                            .then((result2) => {
+                                if (result2[0] && result2[0].userFormFieldMappingId) { // there is an existing record, so update it
+                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
+                                    updateUserFormFieldMapping( 
+                                        irId, standardFieldId, result2[0].userFormFieldMappingId, this.db
+                                    )
+                                } else { // no existing record, so insert
+                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
+                                    createUserFormFieldMapping( 
+                                        result.userId, formId, standardFieldId, formFieldSelector, irId, publicMapping, this.db
+                                    )
+                                }
+                            })
+                    } else { // this is a public mapping
+                        return this.db.any( // check if public record exists
+                            'SELECT "userFormFieldMappingId" ' +
+                            'FROM "User_Form_Field_Mapping" ' +
+                            'WHERE "publicMapping" = true ' +
+                            'AND "formFieldSelector" = $1 ' +
+                            'AND "formId" = $2',
+                            [formFieldSelector, formId])
+                            .then((result3) => {
+                                if (result3[0] && result3[0].userFormFieldMappingId) { // there is an existing record, so update it
+                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
+                                    updateUserFormFieldMapping( 
+                                        irId, standardFieldId, result3[0].userFormFieldMappingId, this.db
+                                    )
+                                } else { // no existing record, so insert
+                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
+                                    createUserFormFieldMapping( 
+                                        result.userId, formId, standardFieldId, formFieldSelector,
+                                        irId, publicMapping, this.db
+                                    )
+                                }
+                            })
+                    }
                 }
             },
             reason => reason

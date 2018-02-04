@@ -50,7 +50,7 @@ GET('/updateForm/:id/:name/:description/:public/:usertoken',
     req.params.id,
     req.params.name,
     req.params.description,
-    req.params.public === 'T' ? 'true' : 'false', 
+    req.params.public,
     req.params.usertoken))
 
 GET('/createupdateuserformfieldmapping/:irid/:formid/:standardfieldid/:formfieldselector/:publicmapping/:defaultvalue/:override/:usertoken',

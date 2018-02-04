@@ -3428,3 +3428,6 @@
 
 21:49:29 error: syntax error at or near ""userId""
          query: UPDATE "Form" SET "formName" = 'Kian''s form LLC', "formDescription" = 'Shaylee!', "public" = falseWHERE "userId" = '21' AND "formId" = '9'
+
+14:52:10 error: syntax error at or near "WHERE"
+         query: UPDATE "User_Form_Field_Mapping" SET "importRowIdentifierId" = '99', "standardFieldId" = '88', WHERE "userFormFieldMappingId" = '13'

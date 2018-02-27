@@ -53,22 +53,20 @@ GET('/updateForm/:id/:name/:description/:public/:usertoken',
     req.params.public,
     req.params.usertoken))
 
-GET('/createupdateuserformfieldmapping/:irid/:formid/:standardfieldid/:formfieldselector/:publicmapping/:defaultvalue/:override/:usertoken',
+GET('/createupdateuserformfieldmapping/:irid/:formid/:standardfieldid/:formfieldselector/:publicmapping/:defaultvalue/:override/:fieldtype/:usertoken',
   req => db.imports.createUpdateUserFormFieldMapping(
-    req.params.irid,
+    req.params.irid === 'null' ? null : req.params.irid,
     req.params.formid,
-    req.params.standardfieldid,
+    req.params.standardfieldid === 'null' ? null : req.params.standardfieldid,
     req.params.formfieldselector,
-    req.params.publicmapping,
-    req.params.defaultvalue,
+    req.params.publicmapping === 'true' ? true : false,
+    req.params.defaultvalue === 'null' ? null : req.params.defaultvalue,
     req.params.override,
+    req.params.fieldtype === 'null' ? null : req.params.fieldtype,
     req.params.usertoken))
 
-
-
-
-
-
+GET('/findformfieldmappings/:formid/:usertoken',
+  req => db.imports.findFormFieldMappings(req.params.formid, req.params.usertoken))
 
 
 

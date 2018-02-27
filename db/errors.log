@@ -3431,3 +3431,42 @@
 
 14:52:10 error: syntax error at or near "WHERE"
          query: UPDATE "User_Form_Field_Mapping" SET "importRowIdentifierId" = '99', "standardFieldId" = '88', WHERE "userFormFieldMappingId" = '13'
+
+21:42:21 error: syntax error at or near "o"
+         query: SELECT (standardFieldId, importRowIdentifierId, formFieldSelector, defaultValue, overrideImportWithDefault) FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = $1 AND "publicMapping" = false AND "formId" = $2 UNION SELECT (standardFieldId, importRowIdentifierId, formFieldSelector, defaultValue, overrideImportWithDefault) FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = $2 AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = $1 AND "publicMapping" = false o
+
+21:43:59 error: syntax error at or near ")"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault") FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = $1 AND "publicMapping" = false AND "formId" = $2 UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = $2 AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = $1 AND "publicMapping" = false o
+
+21:44:26 error: syntax error at or near ")"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault") FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6' UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = '6' AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6')
+
+21:47:32 error: syntax error at or near ")"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault") FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6' UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = '6' AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6')
+
+21:47:40 error: syntax error at or near ")"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault") FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6' UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = '6' AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6')
+
+21:49:34 error: syntax error at or near ")"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault") FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6' UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = '6' AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6')
+
+21:51:28 error: syntax error at or near ")"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault") FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = 'AND "formFieldSelector" IS NOT NULL)' AND "publicMapping" = false AND "formId" = $2 UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = $2 AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = 'AND "formFieldSelector" IS NOT NULL)' AND "publicMapping" = false AND "formId" = $2 
+
+21:51:56 error: syntax error at end of input
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = 'AND "formFieldSelector" IS NOT NULL)' AND "publicMapping" = false AND "formId" = $2 UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = $2 AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = 'AND "formFieldSelector" IS NOT NULL)' AND "publicMapping" = false AND "formId" = $2 
+
+21:53:46 error: syntax error at or near "NOT"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6' UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = '6' AND "formFieldSelector" NOT EXISTS (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = '6')
+
+21:54:28 error: syntax error at end of input
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = 'AND "formFieldSelector" IS NOT NULL)' AND "publicMapping" = false AND "formId" = $2 UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = $2 AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = 'AND "formFieldSelector" IS NOT NULL)' AND "publicMapping" = false AND "formId" = $2 
+
+19:46:29 error: invalid input syntax for integer: "create"
+         query: SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = 'create' UNION SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" FROM "User_Form_Field_Mapping" WHERE "publicMapping" = true AND "formId" = 'create' AND "formFieldSelector" NOT IN (SELECT "formFieldSelector" FROM "User_Form_Field_Mapping" WHERE "createdByUserId" = '21' AND "publicMapping" = false AND "formId" = 'create' AND "formFieldSelector" IS NOT NULL)
+
+19:27:51 error: syntax error at or near ""defaultValue""
+         query: UPDATE "User_Form_Field_Mapping" SET "importRowIdentifierId" = '99', "standardFieldId" = '88' "defaultValue" = 'null', "overrideImportWithDefault" = 'false'WHERE "userFormFieldMappingId" = '59'
+
+07:52:38 error: invalid input syntax for integer: "null"
+         query: INSERT INTO "User_Form_Field_Mapping" ("createdByUserId", "formId", "standardFieldId", "formFieldSelector", "importRowIdentifierId", "publicMapping", "defaultValue", "overrideImportWithDefault") VALUES ('21', '16', 'null', '#jfr_comps tr:nth-of-type(2) [align="center"]:nth-child(5) [type]', 'null', false, 'CAndy', 'true') RETURNING "userFormFieldMappingId"

@@ -203,14 +203,14 @@ class ImportsRespository {
             )
     }
 
-    createUpdateUserFormFieldMapping(irId, formId, standardFieldId, formFieldSelector, publicMapping, defaultValue, override, userToken) {
+    createUpdateUserFormFieldMapping(irId, formId, standardFieldId, formFieldSelector, publicMapping, defaultValue, override, fieldType, userToken) {
         return this.db.oneOrNone(
             'SELECT "userId", "userRole" ' +
             'FROM "Users" ' +
             'WHERE "userToken" = $1 ',
             [userToken])
             .then((result) => {
-                console.log('publicMapping', publicMapping)
+                // console.log('publicMapping', publicMapping)
                 if (result.userId) { // user exists
                     if (publicMapping == true && result.userRole !== 'ADMIN') {
                         throw ('Only ADMIN users may update public mappings.')
@@ -225,17 +225,14 @@ class ImportsRespository {
                             'AND "createdByUserId" = $3',
                             [formFieldSelector, formId, result.userId])
                             .then((result2) => {
-                                console.log('result2', result2[0])
+                                // console.log('result2', result2[0])
                                 if (result2[0] && result2[0].userFormFieldMappingId) { // there is an existing record, so update it
-                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
                                     updateUserFormFieldMapping( 
-                                        irId, standardFieldId, result2[0].userFormFieldMappingId, this.db
+                                        irId, standardFieldId, result2[0].userFormFieldMappingId, defaultValue, override, fieldType, this.db
                                     )
                                 } else { // no existing record, so insert
-                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
-                                    console.log('made it here')
                                     createUserFormFieldMapping( 
-                                        result.userId, formId, standardFieldId, formFieldSelector, irId, publicMapping, this.db
+                                        result.userId, formId, standardFieldId, formFieldSelector, irId, publicMapping, defaultValue, override, fieldType, this.db
                                     )
                                 }
                             })
@@ -248,17 +245,15 @@ class ImportsRespository {
                             'AND "formId" = $2',
                             [formFieldSelector, formId])
                             .then((result3) => {
-                                console.log('result3', result3[0])
+                                // console.log('result3', result3[0])
                                 if (result3[0] && result3[0].userFormFieldMappingId) { // there is an existing record, so update it
-                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
                                     updateUserFormFieldMapping( 
-                                        irId, standardFieldId, result3[0].userFormFieldMappingId, this.db
+                                        irId, standardFieldId, result3[0].userFormFieldMappingId, defaultValue, override, fieldType, this.db
                                     )
                                 } else { // no existing record, so insert
-                                    // LEFT OFF - UPDATE THIS, IF DEFAULT VALUE / OVERRIDE ARE NULL
                                     createUserFormFieldMapping( 
                                         result.userId, formId, standardFieldId, formFieldSelector,
-                                        irId, publicMapping, this.db
+                                        irId, publicMapping, defaultValue, override, fieldType, this.db
                                     )
                                 }
                             })
@@ -267,6 +262,40 @@ class ImportsRespository {
             },
             reason => reason
             )
+    }
+
+    findFormFieldMappings(formId, userToken) {
+        return this.db.oneOrNone(
+            'SELECT "userId" ' +
+            'FROM "Users" ' +
+            'WHERE "userToken" = $1 ',
+            [userToken]).then((result) => {
+                if (result.userId) {
+                    return this.db.any(
+                        'SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" ' +
+                        'FROM "User_Form_Field_Mapping" ' +
+                        'WHERE "createdByUserId" = $1 ' +
+                        'AND "publicMapping" = false ' +
+                        'AND "formId" = $2 ' +
+                        'UNION ' +
+                        'SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" ' +
+                        'FROM "User_Form_Field_Mapping" ' +
+                        'WHERE "publicMapping" = true ' + 
+                        'AND "formId" = $2 ' +
+                        'AND "formFieldSelector" NOT IN (' +
+                            'SELECT "formFieldSelector" ' +
+                            'FROM "User_Form_Field_Mapping" ' +
+                            'WHERE "createdByUserId" = $1 ' +
+                            'AND "publicMapping" = false ' +
+                            'AND "formId" = $2 ' +
+                            'AND "formFieldSelector" IS NOT NULL)',
+                        [result.userId, formId]
+                    )
+                }
+            },
+            reason => reason
+            )
+            .catch((reason) => console.log(reason))
     }
 }
 

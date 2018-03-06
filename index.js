@@ -61,7 +61,7 @@ GET('/createupdateuserformfieldmapping/:irid/:formid/:standardfieldid/:formfield
     req.params.formfieldselector,
     req.params.publicmapping === 'true' ? true : false,
     req.params.defaultvalue === 'null' ? null : req.params.defaultvalue,
-    req.params.override,
+    req.params.override === 'null' ? null : req.params.override,
     req.params.fieldtype === 'null' ? null : req.params.fieldtype,
     req.params.usertoken))
 

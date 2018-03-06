@@ -3470,3 +3470,6 @@
 
 07:52:38 error: invalid input syntax for integer: "null"
          query: INSERT INTO "User_Form_Field_Mapping" ("createdByUserId", "formId", "standardFieldId", "formFieldSelector", "importRowIdentifierId", "publicMapping", "defaultValue", "overrideImportWithDefault") VALUES ('21', '16', 'null', '#jfr_comps tr:nth-of-type(2) [align="center"]:nth-child(5) [type]', 'null', false, 'CAndy', 'true') RETURNING "userFormFieldMappingId"
+
+08:42:44 error: invalid input syntax for type boolean: "null"
+         query: INSERT INTO "User_Form_Field_Mapping" ("createdByUserId", "formId", "standardFieldId", "formFieldSelector", "importRowIdentifierId", "publicMapping", "defaultValue", "overrideImportWithDefault", "formFieldType") VALUES ('21', '16', '80', '[name="zoning"]', '7', false, null, 'null', 'select-one') RETURNING "userFormFieldMappingId"

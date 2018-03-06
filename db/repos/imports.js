@@ -1,8 +1,6 @@
-// import { updateUserFormFieldMapping, createUserFormFieldMapping } from './utilities'
-
 const updateUserFormFieldMapping = require('./utilities').updateUserFormFieldMapping
 const createUserFormFieldMapping = require('./utilities').createUserFormFieldMapping
-
+const setFormFieldsForUpdate = require('./utilities').setFormFieldsForUpdate
 
 class ImportsRespository {
     constructor(db, pgp) {
@@ -14,14 +12,17 @@ class ImportsRespository {
         return this.db.any(
             'SELECT "standardFieldId", "standardFieldName", ' +
             '"standardFieldDescription", "importRowIdentifier"' +
-            'FROM "Standard_Field"')
+            'FROM "Standard_Field" ' +
+            'ORDER BY "standardFieldName"'
+        )
     }
 
     getRowIdentifiersStubData() {
         return this.db.any(
             'SELECT "importRowIdentifierId" as "rowIdentifierId", "identifierName" as "rowIdentifierName", ' +
             '"identifierPrefix" as "rowIdentifierPrefix"' +
-            'FROM "Import_Row_Identifier"')
+            'FROM "Import_Row_Identifier" '
+        )
     }
 
     createImportFileSetup(name, userId, userToken) {
@@ -217,7 +218,7 @@ class ImportsRespository {
                     }
                     if (publicMapping == false) { // this is a user (private) mapping
                         return this.db.any( // check if private record already exists
-                            'SELECT "userFormFieldMappingId" ' +
+                            'SELECT "userFormFieldMappingId", "importRowIdentifierId", "standardFieldId", "defaultValue", "overrideImportWithDefault" ' +
                             'FROM "User_Form_Field_Mapping" ' +
                             'WHERE "publicMapping" = false ' +
                             'AND "formFieldSelector" = $1 ' +
@@ -227,8 +228,10 @@ class ImportsRespository {
                             .then((result2) => {
                                 // console.log('result2', result2[0])
                                 if (result2[0] && result2[0].userFormFieldMappingId) { // there is an existing record, so update it
+                                    const uVals = setFormFieldsForUpdate(irId, standardFieldId, defaultValue, override, result2[0])
+                                    const updateIrId = uVals[0], updateStandardFieldId = uVals[1], updateDefaultValue = uVals[2], updateOverride = uVals[3]
                                     updateUserFormFieldMapping( 
-                                        irId, standardFieldId, result2[0].userFormFieldMappingId, defaultValue, override, fieldType, this.db
+                                        updateIrId, updateStandardFieldId, result2[0].userFormFieldMappingId, updateDefaultValue, updateOverride, fieldType, this.db
                                     )
                                 } else { // no existing record, so insert
                                     createUserFormFieldMapping( 
@@ -238,7 +241,7 @@ class ImportsRespository {
                             })
                     } else { // this is a public mapping
                         return this.db.any( // check if public record exists
-                            'SELECT "userFormFieldMappingId" ' +
+                            'SELECT "userFormFieldMappingId", "importRowIdentifierId", "standardFieldId", "defaultValue", "overrideImportWithDefault" ' +
                             'FROM "User_Form_Field_Mapping" ' +
                             'WHERE "publicMapping" = true ' +
                             'AND "formFieldSelector" = $1 ' +
@@ -247,8 +250,10 @@ class ImportsRespository {
                             .then((result3) => {
                                 // console.log('result3', result3[0])
                                 if (result3[0] && result3[0].userFormFieldMappingId) { // there is an existing record, so update it
+                                    const uVals = setFormFieldsForUpdate(irId, standardFieldId, defaultValue, override, result3[0])
+                                    const updateIrId = uVals[0], updateStandardFieldId = uVals[1], updateDefaultValue = uVals[2], updateOverride = uVals[3]
                                     updateUserFormFieldMapping( 
-                                        irId, standardFieldId, result3[0].userFormFieldMappingId, defaultValue, override, fieldType, this.db
+                                        updateIrId, updateStandardFieldId, result3[0].userFormFieldMappingId, updateDefaultValue, updateOverride, fieldType, this.db
                                     )
                                 } else { // no existing record, so insert
                                     createUserFormFieldMapping( 
@@ -272,13 +277,13 @@ class ImportsRespository {
             [userToken]).then((result) => {
                 if (result.userId) {
                     return this.db.any(
-                        'SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" ' +
+                        'SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault", "formFieldType" ' +
                         'FROM "User_Form_Field_Mapping" ' +
                         'WHERE "createdByUserId" = $1 ' +
                         'AND "publicMapping" = false ' +
                         'AND "formId" = $2 ' +
                         'UNION ' +
-                        'SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault" ' +
+                        'SELECT "standardFieldId", "importRowIdentifierId", "formFieldSelector", "defaultValue", "overrideImportWithDefault", "formFieldType" ' +
                         'FROM "User_Form_Field_Mapping" ' +
                         'WHERE "publicMapping" = true ' + 
                         'AND "formId" = $2 ' +

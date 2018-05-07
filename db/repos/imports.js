@@ -145,7 +145,7 @@ class ImportsRespository {
             )
     }
 
-    createForm(formName, formDescription, userToken) {
+    createForm(formName, formDescription, isPublic, userToken) {
         return this.db.oneOrNone(
             'SELECT "userId" ' +
             'FROM "Users" ' +
@@ -154,10 +154,10 @@ class ImportsRespository {
                 if (result.userId) {
                     return this.db.one(
                         'INSERT INTO "Form" ' +
-                        '("formName", "formDescription", "userId") ' +
-                        'VALUES ($1, $2, $3) ' +
+                        '("formName", "formDescription", "public", "userId") ' +
+                        'VALUES ($1, $2, $3, $4) ' +
                         'RETURNING "formId"',
-                        [formName, formDescription, result.userId]
+                        [formName, formDescription, isPublic, result.userId]
                     )
                 }
             },
@@ -204,14 +204,13 @@ class ImportsRespository {
             )
     }
 
-    createUpdateUserFormFieldMapping(irId, formId, standardFieldId, formFieldSelector, publicMapping, defaultValue, override, fieldType, userToken) {
+    createUpdateUserFormFieldMapping(irId, formId, standardFieldId, formFieldSelector, publicMapping, defaultValue, override, fieldType, userToken) {   
         return this.db.oneOrNone(
             'SELECT "userId", "userRole" ' +
             'FROM "Users" ' +
             'WHERE "userToken" = $1 ',
             [userToken])
             .then((result) => {
-                // console.log('publicMapping', publicMapping)
                 if (result.userId) { // user exists
                     if (publicMapping == true && result.userRole !== 'ADMIN') {
                         throw ('Only ADMIN users may update public mappings.')
@@ -226,7 +225,6 @@ class ImportsRespository {
                             'AND "createdByUserId" = $3',
                             [formFieldSelector, formId, result.userId])
                             .then((result2) => {
-                                // console.log('result2', result2[0])
                                 if (result2[0] && result2[0].userFormFieldMappingId) { // there is an existing record, so update it
                                     const uVals = setFormFieldsForUpdate(irId, standardFieldId, defaultValue, override, result2[0])
                                     const updateIrId = uVals[0], updateStandardFieldId = uVals[1], updateDefaultValue = uVals[2], updateOverride = uVals[3]
@@ -248,7 +246,6 @@ class ImportsRespository {
                             'AND "formId" = $2',
                             [formFieldSelector, formId])
                             .then((result3) => {
-                                // console.log('result3', result3[0])
                                 if (result3[0] && result3[0].userFormFieldMappingId) { // there is an existing record, so update it
                                     const uVals = setFormFieldsForUpdate(irId, standardFieldId, defaultValue, override, result3[0])
                                     const updateIrId = uVals[0], updateStandardFieldId = uVals[1], updateDefaultValue = uVals[2], updateOverride = uVals[3]

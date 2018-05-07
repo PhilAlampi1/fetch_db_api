@@ -3473,3 +3473,63 @@
 
 08:42:44 error: invalid input syntax for type boolean: "null"
          query: INSERT INTO "User_Form_Field_Mapping" ("createdByUserId", "formId", "standardFieldId", "formFieldSelector", "importRowIdentifierId", "publicMapping", "defaultValue", "overrideImportWithDefault", "formFieldType") VALUES ('21', '16', '80', '[name="zoning"]', '7', false, null, 'null', 'select-one') RETURNING "userFormFieldMappingId"
+
+15:46:49 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:49:06 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:49:08 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:49:17 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:52:03 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:56:10 error: password authentication failed for user "postgres"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"postgres","password":"###############"}
+
+15:56:12 error: password authentication failed for user "postgres"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"postgres","password":"###############"}
+
+15:56:23 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:59:51 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:59:52 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:59:52 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:59:53 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+15:59:54 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+16:02:20 error: connect ETIMEDOUT 18.219.18.78:5432
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+16:04:08 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+16:04:11 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+16:07:37 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+16:07:40 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+16:07:41 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}
+
+16:07:56 error: password authentication failed for user "MrBrushly"
+         connection: {"host":"fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com","port":5432,"database":"fetchProd","user":"MrBrushly","password":"#########"}

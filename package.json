@@ -1,9 +1,10 @@
 {
-  "name": "touchdown_api",
-  "version": "0.0.1",
-  "description": "API for touchdown app.",
+  "name": "fetch_api",
+  "version": "0.0.7",
+  "description": "API for Fetch app.",
   "scripts": {
-    "start": "nodemon index.js"
+    "start-dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "keywords": [
     "pg-promise",

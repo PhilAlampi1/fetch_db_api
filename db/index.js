@@ -7,12 +7,6 @@ const repos = {
     users: require('./repos/users'),
     uidescriptions: require('./repos/uidescriptions'),
     imports: require('./repos/imports')
-    // formimports: require('./repos/formimports'),
-    // formimportrowcategories: require('./repos/formimportrowcategories'),
-    // formimportmappings: require('./repos/formimportmappings'),
-    // transactionhistory: require('./repos/transactionhistory')
-    // ,
-    // products: require('./repos/products')
 }
 
 // pg-promise initialization options:
@@ -31,11 +25,6 @@ const options = {
         obj.users = new repos.users(obj, pgp)
         obj.uidescriptions = new repos.uidescriptions(obj, pgp)
         obj.imports = new repos.imports(obj, pgp)
-        // obj.formimports = new repos.formimports(obj, pgp)
-        // obj.formimportrowcategories = new repos.formimportrowcategories(obj, pgp)
-        // obj.formimportmappings = new repos.formimportmappings(obj, pgp)
-        // obj.transactionhistory = new repos.transactionhistory(obj, pgp)
-        // obj.products = new repos.products(obj, pgp)
 
         // Alternatively, you can set all repositories in a loop:
         //
@@ -47,13 +36,44 @@ const options = {
 }
 
 // Database connection parameters:
+
+// DEVELOPMENT
+// const config = {
+//     host: 'localhost',
+//     port: 5432,
+//     database: 'fetch-dev',
+//     user: 'postgres',
+//     password: 'P0stgres1tup123'
+// }
+
+// PRODUCTION
+
+
+
 const config = {
-    host: 'localhost',
-    port: 5432,
-    database: 'fetch-dev',
-    user: 'postgres',
-    password: 'P0stgres1tup123'
+    host: process.env.RDS_HOSTNAME,
+    port: process.env.RDS_PORT,
+    database: process.env.RDS_DB_NAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD
 }
+
+
+// PRODUCTION ATTEMPT - DIDN'T WORK
+// const config = {
+//     host: 'fetchawsinstance.ccukbb8dxn6o.us-east-2.rds.amazonaws.com',
+//     port: 5432,
+//     database: 'fetchProd',
+//     user: 'MrBrushly',
+//     password: 'Brush1tup',
+//     ssl : {
+//         rejectUnauthorized : false,
+//         ca   : fs.readFileSync("/path/to/server-certificates/maybe/root.crt").toString(),
+//         key  : fs.readFileSync("/path/to/client-key/maybe/postgresql.key").toString(),
+//         cert : fs.readFileSync("/path/to/client-certificates/maybe/postgresql.crt").toString(),
+//       }
+// }
+
 
 // Load and initialize pg-promise:
 const pgp = require('pg-promise')(options)
